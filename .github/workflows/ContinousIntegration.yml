@@ -1,0 +1,49 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: continous integration messagequeueprocessor
+ 
+on:
+  push:
+    branches:
+      - main
+ 
+jobs:
+  build:
+    name: Build and Archive
+    runs-on: ubuntu-22.04
+ 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+ 
+    # Setup .NET 8 SDK
+    - name: Setup .NET 8 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Add Azure artifact
+      run: dotnet nuget add source 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json' --name 'LearningHubFeed'  --username 'kevin.whittaker' --password ${{ secrets.AZURE_DEVOPS_PAT }} --store-password-in-clear-text
+	  
+    # Restore NuGet packages
+    # Note: If you use a private feed, authentication must be set here separately.
+    - name: Restore NuGet packages
+      run: dotnet restore --verbosity detailed
+ 
+    # Build project(s)
+    - name: Build project(s)
+      run: dotnet build '**/*.csproj' --output publish_output --configuration Release --verbosity detailed
+ 
+    # Archive files
+    - name: Archive publish_output folder
+      run: |
+        mkdir -p artifacts
+        zip -r artifacts/publish_output.zip publish_output/
+ 
+    # Upload artifact
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: drop
+        path: artifacts/publish_output.zip
