@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "LearningHub.Nhs.MessageQueueProcessor": {
+      "commandName": "Project"
+    }
+  }
+}
