@@ -6,7 +6,7 @@ name: continous integration messagequeueprocessor
 on:
   push:
     branches:
-      - main
+      - CI
  
 jobs:
   build:
