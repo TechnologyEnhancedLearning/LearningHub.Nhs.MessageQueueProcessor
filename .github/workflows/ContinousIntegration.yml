@@ -6,7 +6,7 @@ name: continous integration messagequeueprocessor
 on:
   push:
     branches:
-      - main
+      - CI
  
 jobs:
   build:
@@ -22,10 +22,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
-        
-    - name: Add Azure artifact
-      run: dotnet nuget add source 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json' --name 'LearningHubFeed'  --username 'kevin.whittaker' --password ${{ secrets.AZURE_DEVOPS_PAT }} --store-password-in-clear-text
-	  
+ 
     # Restore NuGet packages
     # Note: If you use a private feed, authentication must be set here separately.
     - name: Restore NuGet packages
