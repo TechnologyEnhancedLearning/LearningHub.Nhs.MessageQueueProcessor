@@ -21,6 +21,7 @@ resource "azurerm_app_service_plan" "MessageQueueProcessorAppServicePlan" {
     tier = "Dynamic"
     size = "Y1"
   }
+}
 
 resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   name                       = "MessageQueueProcessorApp"
@@ -42,7 +43,6 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   app_settings {
     WEBSITE_RUN_FROM_PACKAGE  = "~4"
     AzureWebJobsStorage       = "azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string"
-    WEBSITE_RUN_FROM_PACKAGE  = "1"
     FUNCTIONS_WORKER_RUNTIME  = "dotnet-isolated"
   }
 }
