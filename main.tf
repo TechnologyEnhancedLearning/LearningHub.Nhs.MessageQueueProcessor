@@ -42,7 +42,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   app_settings {
     FUNCTIONS_WORKER_RUNTIME = "dotnet-isolated"
     WEBSITE_RUN_FROM_PACKAGE = "~4"
-    AzureWebJobsStorage      = azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string"
+    AzureWebJobsStorage      = "azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string"
     WEBSITE_RUN_FROM_PACKAGE = "1"
   }
 }
