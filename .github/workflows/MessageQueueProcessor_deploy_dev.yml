@@ -27,10 +27,13 @@ jobs:
         with:
           terraform_wrapper: false  # Skip wrapper script installation
 
+      - name: list folder
+        run: ls
+
       - name: 'Terraform init'
         id: init
         run: |
-          cd Terraform/
+          cd Terraform
           terraform init "-backend-config=backend-dev.tfvars"
 
       - name: 'Terraform apply'
