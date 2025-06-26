@@ -1,0 +1,76 @@
+name: Deploy MessageQueueProcessor to Dev
+on:
+  push:
+    branches:
+      - CI
+  
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: windows-latest
+    environment: dev
+    name: 'Terraform MessageQueueProcessor'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false  # Skip wrapper script installation
+
+      - name: 'Terraform init'
+        id: init
+        run: |
+          cd Terraform/dev
+          terraform init "-backend-config=backend-dev.tfvars"
+
+      - name: 'Terraform apply'
+        id: apply
+        run: |
+          cd Terraform
+          terraform apply -auto-approve \
+            -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
+            -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}"
+
+  build_and_deploy:
+    needs: terraform
+    runs-on: windows-latest
+    environment: dev
+    name: 'Build and deploy the MessageQueueProcessor'
+    env:
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+      - name: Checkout code
+        uses: action/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --configuration Development
+
+      - name: Publish Project
+        run: dotnet publish --configuration Development --output ./publish
+
+      # - name: Deploy to Azure Function App
+      #   uses: Azure/Functions-action@v1
+      #   with:
+      #     app-name: 'MessageQueueProcessorApp'
+      #     package: './publish'
+      #     publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
