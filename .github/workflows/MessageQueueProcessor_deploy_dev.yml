@@ -36,7 +36,7 @@ jobs:
       - name: 'Terraform init'
         id: init
         run: |
-          cd Terraform
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform init "-backend-config=backend-dev.tfvars"
 
       - name: 'Terraform apply'
