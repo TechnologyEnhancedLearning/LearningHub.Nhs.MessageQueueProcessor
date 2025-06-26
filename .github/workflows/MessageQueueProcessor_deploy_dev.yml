@@ -28,7 +28,10 @@ jobs:
           terraform_wrapper: false  # Skip wrapper script installation
 
       - name: list folder
-        run: ls
+        run: |
+          ls
+          cd LearningHub.Nhs.MessageQueueProcessor
+          ls
 
       - name: 'Terraform init'
         id: init
