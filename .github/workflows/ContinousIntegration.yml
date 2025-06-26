@@ -3,10 +3,10 @@
 
 name: continous integration messagequeueprocessor
  
-on:
-  push:
-    branches:
-      - CI
+# on:
+#   push:
+#     branches:
+#       - CI
  
 jobs:
   build:
