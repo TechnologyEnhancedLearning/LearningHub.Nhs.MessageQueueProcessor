@@ -30,6 +30,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   storage_account_name       = azurerm_storage_account.MessageQueueProcessorStorageAccount.name
   storage_account_access_key = azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_access_key
   version                    = "~4"
+
   site_config {
     application_stack {
       dotnet_version = "8.0"
@@ -39,6 +40,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
     ftps_state                = "Disabled"
     scm_type                  = "None"
   }
+
   app_settings {
     FUNCTIONS_WORKER_RUNTIME = "dotnet-isolated"
     WEBSITE_RUN_FROM_PACKAGE = "~4"
