@@ -84,6 +84,11 @@ resource "azurerm_mssql_managed_instance" "sqlmi" {
   lifecycle {
     prevent_destroy = true
   }
+  timeouts {
+    create = "180m"
+    update = "120m"
+    delete = "60m"
+  }
 }
 
 resource "azurerm_mssql_managed_database" "sqldb" {
