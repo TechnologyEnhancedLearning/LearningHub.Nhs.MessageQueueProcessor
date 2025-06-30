@@ -45,12 +45,11 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
 
 resource "azurerm_mssql_managed_instance" "sqlmi" {
   name = var.SqlmiName
-  resource_group_name = azurerm_resource_group.learningHubMoodleResourceGroup.name
-  location = azurerm_resource_group.learningHubMoodleResourceGroup.location
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  location = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
   license_type = "BasePrice"
   administrator_login = var.SQLAdministratorLogin
   administrator_login_password = var.SQLAdministratorLoginPassword
-  subnet_id = azurerm_subnet.subnet.id
   sku_name = var.SQLSkuName
   storage_size_in_gb = var.SQLStorageSize
   vcores = var.SQLVcores
