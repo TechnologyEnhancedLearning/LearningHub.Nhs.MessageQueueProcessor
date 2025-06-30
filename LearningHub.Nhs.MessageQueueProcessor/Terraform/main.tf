@@ -42,3 +42,30 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
     DOTNET_VERSION            = "8.0"
   }
 }
+
+resource "azurerm_mssql_managed_instance" "sqlmi" {
+  name = var.SqlmiName
+  resource_group_name = azurerm_resource_group.learningHubMoodleResourceGroup.name
+  location = azurerm_resource_group.learningHubMoodleResourceGroup.location
+  license_type = "BasePrice"
+  administrator_login = var.SQLAdministratorLogin
+  administrator_login_password = var.SQLAdministratorLoginPassword
+  subnet_id = azurerm_subnet.subnet.id
+  sku_name = var.SQLSkuName
+  storage_size_in_gb = var.SQLStorageSize
+  vcores = var.SQLVcores
+  tags = {
+    environment = var.Environment
+  }
+  identity {
+    type = "SystemAssigned"
+  }
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "azurerm_mssql_managed_database" "sqldb" {
+  name = "GovNotifyMessage"
+  managed_instance_id = azurerm_mssql_managed_instance.sqlmi.id
+}
