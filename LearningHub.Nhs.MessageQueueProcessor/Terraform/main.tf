@@ -50,6 +50,30 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
 }
 
+resource "azurerm_network_security_group" "nsg" {
+  name                = "ManagedInstanceNSG"
+  location            = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  security_rule {
+    name                       = "AllowInbound"
+    description                = "Allow inbound traffic"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    priority                   = 100
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "1433"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+resource "azurerm_route_table" "route_table" {
+  name                = "ManagedInstanceRouteTable"
+  location            = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+}
+
 resource "azurerm_subnet" "subnet" {
   name = "ManagedInstanceSubnet"
   resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
@@ -59,9 +83,19 @@ resource "azurerm_subnet" "subnet" {
     name = "sqlMI"
     service_delegation {
       name = "Microsoft.Sql/managedInstances"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
     }
   }
+}
+
+resource "azurerm_subnet_network_security_group_association" "subnet_nsg_association" {
+  subnet_id                 = azurerm_subnet.subnet.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+resource "azurerm_subnet_route_table_association" "subnet_route_table_association" {
+  subnet_id = azurerm_subnet.subnet.id
+  route_table_id = azurerm_route_table.route_table.id
 }
 
 resource "azurerm_mssql_managed_instance" "sqlmi" {
