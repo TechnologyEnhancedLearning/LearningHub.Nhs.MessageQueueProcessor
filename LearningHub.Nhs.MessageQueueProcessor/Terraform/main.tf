@@ -32,17 +32,15 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   storage_account_access_key = azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_access_key
   version                    = "~4"
   site_config {
-    application_stack {
-      dotnet_version = "8.0"
-    }
     use_32_bit_worker_process = false
     always_on                 = true
     ftps_state                = "Disabled"
     scm_type                  = "None"
   }
   app_settings {
-    WEBSITE_RUN_FROM_PACKAGE  = "~4"
+    WEBSITE_RUN_FROM_PACKAGE  = "1"
     AzureWebJobsStorage       = "azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string"
     FUNCTIONS_WORKER_RUNTIME  = "dotnet-isolated"
+    DOTNET_VERSION            = "8.0"
   }
 }
