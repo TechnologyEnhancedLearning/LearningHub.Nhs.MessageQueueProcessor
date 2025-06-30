@@ -49,10 +49,10 @@ jobs:
             -var="SqlmiName=${{ vars.SQLMI_NAME }}" `
             -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" `
             -var="SQLAdministratorLoginPassword${{  }}" `
-            -var "SQLSkuName${{ vars.SQL_SKU_NAME }}" `
-            -var "SQLStorageSize${{ vars.SQL_STORAGE_SIZE }}" `
-            -var "SQLVcores${{ vars.SQL_VCORES }}" `
-            -var "Environment=Development"
+            -var="SQLSkuName${{ vars.SQL_SKU_NAME }}" `
+            -var="SQLStorageSize${{ vars.SQL_STORAGE_SIZE }}" `
+            -var="SQLVcores${{ vars.SQL_VCORES }}" `
+            -var="Environment=Development"
 
   build_and_deploy:
     needs: terraform
