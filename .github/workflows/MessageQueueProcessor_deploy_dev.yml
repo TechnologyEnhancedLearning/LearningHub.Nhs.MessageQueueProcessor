@@ -42,7 +42,7 @@ jobs:
       - name: 'Terraform apply'
         id: apply
         run: |
-          cd Terraform
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform apply -auto-approve \
             -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
             -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}"
