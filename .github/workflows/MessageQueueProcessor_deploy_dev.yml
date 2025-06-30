@@ -48,7 +48,7 @@ jobs:
             -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" `
             -var="SqlmiName=${{ vars.SQLMI_NAME }}" `
             -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" `
-            -var="SQLAdministratorLoginPassword${{  }}" `
+            -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" `
             -var="SQLSkuName${{ vars.SQL_SKU_NAME }}" `
             -var="SQLStorageSize${{ vars.SQL_STORAGE_SIZE }}" `
             -var="SQLVcores${{ vars.SQL_VCORES }}" `
