@@ -33,9 +33,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   version                    = "~4"
   site_config {
     use_32_bit_worker_process = false
-    always_on                 = true
     ftps_state                = "Disabled"
-    scm_type                  = "None"
   }
   app_settings = {
     WEBSITE_RUN_FROM_PACKAGE  = "1"
