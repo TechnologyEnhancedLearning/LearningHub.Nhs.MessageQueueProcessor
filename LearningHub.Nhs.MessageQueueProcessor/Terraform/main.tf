@@ -65,8 +65,8 @@ resource "azurerm_network_security_group" "nsg" {
     destination_port_range     = "1433"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
-  },
-  {
+  }
+  security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-healthprobe-in-10-0-1-0-24-v11"
     description                = "Allow Azure Load Balancer inbound traffic"
     direction                  = "Inbound"
@@ -81,8 +81,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourceAddressPrefixes      = []
     sourcePortRange            = "*"
     sourcePortRanges           = []
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow MI internal inbound traffic",
     destinationAddressPrefix  = "10.0.1.0/24",
@@ -102,8 +102,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourcePortRange  = "*",
     sourcePortRanges": [],
     type  = "Microsoft.Network/networkSecurityGroups/securityRules"
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow communication with Azure Active Directory over https",
     destinationAddressPrefix  = "AzureActiveDirectory",
@@ -123,8 +123,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourcePortRange  = "*",
     sourcePortRanges": [],
     type  = "Microsoft.Network/networkSecurityGroups/securityRules"
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow communication with the One DS Collector over https",
     destinationAddressPrefix  = "OneDsCollector",
@@ -144,8 +144,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourcePortRange  = "*",
     sourcePortRanges": [],
     type  = "Microsoft.Network/networkSecurityGroups/securityRules"
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow MI internal outbound traffic",
     destinationAddressPrefix  = "10.0.1.0/24",
@@ -165,8 +165,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourcePortRange  = "*",
     sourcePortRanges": [],
     type  = "Microsoft.Network/networkSecurityGroups/securityRules"
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow outbound communication with storage over HTTPS",
     destinationAddressPrefix  = "Storage.uksouth",
@@ -186,8 +186,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourcePortRange  = "*",
     sourcePortRanges": [],
     type  = "Microsoft.Network/networkSecurityGroups/securityRules"
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow outbound communication with storage over HTTPS",
     destinationAddressPrefix  = "Storage.ukwest",
@@ -207,8 +207,8 @@ resource "azurerm_network_security_group" "nsg" {
     sourcePortRange  = "*",
     sourcePortRanges": [],
     type  = "Microsoft.Network/networkSecurityGroups/securityRules"
-  },
-  {
+  }
+  security_rule {
     access  = "Allow",
     description  = "Allow AzureCloud outbound https traffic",
     destinationAddressPrefix  = "AzureCloud",
