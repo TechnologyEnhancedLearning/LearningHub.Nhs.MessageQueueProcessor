@@ -93,6 +93,7 @@ resource "azurerm_network_security_group" "nsg" {
     access                     = "Allow"
     priority                   = 101
     protocol                   = "Tcp"
+    source_port_range          = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-onedsc-out-10-0-1-0-24-v11"
