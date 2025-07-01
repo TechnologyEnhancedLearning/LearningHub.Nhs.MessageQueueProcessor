@@ -81,14 +81,6 @@ resource "azurerm_network_security_group" "nsg" {
     access                     = "Allow"
     priority                   = 101
     protocol                   = "*"
-    destinationPortRange       = "*"
-    destinationPortRanges      = []
-    destinationAddressPrefix   = "10.0.1.0/24"
-    destinationAddressPrefixes =  []
-    sourceAddressPrefix        = "10.0.1.0/24"
-    sourceAddressPrefixes      = []
-    sourcePortRange            = "*"
-    sourcePortRanges           = []
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-aad-out-10-0-1-0-24-v11"
