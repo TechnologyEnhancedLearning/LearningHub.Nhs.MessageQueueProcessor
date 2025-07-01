@@ -105,14 +105,6 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   =  102
     protocol                   = "Tcp"
-    destinationAddressPrefix   = "OneDsCollector"
-    destinationAddressPrefixes = []
-    destinationPortRange       = "443"
-    destinationPortRanges      = []
-    sourceAddressPrefix        = "10.0.1.0/24"
-    sourceAddressPrefixes      = []
-    sourcePortRange            = "*"
-    sourcePortRanges           = []
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-out-10-0-1-0-24-v11"
@@ -121,14 +113,6 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 103
     protocol                   = "*"
-    destinationAddressPrefix   = "10.0.1.0/24"
-    destinationAddressPrefixes = []
-    destinationPortRange       = "*"
-    destinationPortRanges      = []
-    sourceAddressPrefix        = "10.0.1.0/24"
-    sourceAddressPrefixes      = []
-    sourcePortRange            = "*"
-    sourcePortRanges           = []
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-strg-p-out-10-0-1-0-24-v11"
@@ -137,14 +121,6 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 104
     protocol                   = "*"
-    destinationAddressPrefix   = "Storage.uksouth"
-    destinationAddressPrefixes = []
-    destinationPortRange       = "443"
-    destinationPortRanges      = []
-    sourceAddressPrefix        = "10.0.1.0/24"
-    sourceAddressPrefixes      = []
-    sourcePortRange            = "*"
-    sourcePortRanges           = []
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-strg-s-out-10-0-1-0-24-v11"
@@ -153,15 +129,6 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 105
     protocol                   = "*"
-    provisioningState          = "Succeeded"
-    destinationAddressPrefix   = "Storage.ukwest"
-    destinationAddressPrefixes = []
-    destinationPortRange       = "443"
-    destinationPortRanges      = []
-    sourceAddressPrefix        = "10.0.1.0/24"
-    sourceAddressPrefixes      = []
-    sourcePortRange            = "*"
-    sourcePortRanges           = []
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-optional-azure-out-10-0-1-0-24"
@@ -170,14 +137,6 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 100
     protocol                   = "Tcp"
-    destinationAddressPrefix   = "AzureCloud"
-    destinationAddressPrefixes =  []
-    destinationPortRange       = "443"
-    destinationPortRanges      = []
-    sourceAddressPrefix        = "10.0.1.0/24"
-    sourceAddressPrefixes      = []
-    sourcePortRange            = "*"
-    sourcePortRanges           = []
   }
 }
 
