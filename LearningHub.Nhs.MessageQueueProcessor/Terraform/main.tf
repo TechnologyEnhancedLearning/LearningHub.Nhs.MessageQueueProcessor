@@ -122,6 +122,7 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 104
     protocol                   = "*"
+    source_port_range          = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-strg-s-out-10-0-1-0-24-v11"
