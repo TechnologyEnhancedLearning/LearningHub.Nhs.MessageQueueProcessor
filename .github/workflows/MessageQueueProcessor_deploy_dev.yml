@@ -78,7 +78,7 @@ jobs:
         run: dotnet build
 
       - name: Publish Project
-        run: dotnet publish --configuration Development --output ./publish
+        run: dotnet publish --output ./publish
 
       # - name: Deploy to Azure Function App
       #   uses: Azure/Functions-action@v1
