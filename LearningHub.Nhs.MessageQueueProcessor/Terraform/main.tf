@@ -83,7 +83,7 @@ resource "azurerm_network_security_group" "nsg" {
     description                = "Allow MI internal inbound traffic"
     direction                  = "Inbound"
     access                     = "Allow"
-    priority                   = 101
+    priority                   = 102
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
