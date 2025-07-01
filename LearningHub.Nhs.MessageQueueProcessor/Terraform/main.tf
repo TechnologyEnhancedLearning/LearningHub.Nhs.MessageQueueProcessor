@@ -90,7 +90,7 @@ resource "azurerm_network_security_group" "nsg" {
     priority                   = 101
     protocol                   = "*"
     destinationPortRange       = "*"
-    destinationPortRanges      = [],
+    destinationPortRanges      = []
     destinationAddressPrefix   = "10.0.1.0/24"
     destinationAddressPrefixes =  []
     sourceAddressPrefix        = "10.0.1.0/24"
