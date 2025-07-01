@@ -121,6 +121,8 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 103
     protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -143,7 +145,9 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 105
     protocol                   = "*"
-       source_address_prefix      = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
   security_rule {
@@ -153,7 +157,9 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 100
     protocol                   = "Tcp"
-       source_address_prefix      = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
 }
