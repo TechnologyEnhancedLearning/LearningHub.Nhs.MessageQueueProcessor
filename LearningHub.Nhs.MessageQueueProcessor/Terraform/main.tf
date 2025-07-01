@@ -76,6 +76,7 @@ resource "azurerm_network_security_group" "nsg" {
     source_port_range          = "*"
     destination_port_range     = "*"
     source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-in-10-0-1-0-24-v11"
@@ -87,6 +88,7 @@ resource "azurerm_network_security_group" "nsg" {
     source_port_range          = "*"
     destination_port_range     = "*"
     source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-aad-out-10-0-1-0-24-v11"
@@ -97,6 +99,8 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-onedsc-out-10-0-1-0-24-v11"
@@ -108,6 +112,7 @@ resource "azurerm_network_security_group" "nsg" {
     source_port_range          = "*"
     destination_port_range     = "*"
     source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-out-10-0-1-0-24-v11"
@@ -116,6 +121,8 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 103
     protocol                   = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-strg-p-out-10-0-1-0-24-v11"
@@ -136,6 +143,8 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 105
     protocol                   = "*"
+       source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-optional-azure-out-10-0-1-0-24"
@@ -144,6 +153,8 @@ resource "azurerm_network_security_group" "nsg" {
     direction                  = "Outbound"
     priority                   = 100
     protocol                   = "Tcp"
+       source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
 }
 
