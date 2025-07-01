@@ -126,6 +126,7 @@ resource "azurerm_network_security_group" "nsg" {
     source_port_range          = "*"
     destination_port_range     = "*"
     source_address_prefix      = "*"
+    destination_address_prefix = "*"
   }
   security_rule {
     name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-strg-s-out-10-0-1-0-24-v11"
