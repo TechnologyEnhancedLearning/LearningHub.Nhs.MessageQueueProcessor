@@ -74,6 +74,12 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor
           dotnet restore
 
+      - name: Replace values in appsettings.json
+        run : |
+          sed -i -e 's/INSTRUMENTATION_KEY/${{ secrets.APPLICATION_INSIGHTS_INSTRUMENTATION_KEY }}/g' appsettings.json
+          sed -i -e 's/BASE_URL/${{ vars.SETTINGS_BASE_URL }}/g' appsettings.json
+          sed -i -e 's/API_KEY/${{ secrets.SETTINGS_API_KEY }}/g' appsettings.json
+
       - name: Build project
         run: dotnet build
 
