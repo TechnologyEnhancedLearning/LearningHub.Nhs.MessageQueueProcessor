@@ -36,7 +36,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
     ftps_state                = "Disabled"
   }
   app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE  = "1"
+    WEBSITE_RUN_FROM_PACKAGE  = "~4"
     AzureWebJobsStorage       = azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string
     FUNCTIONS_WORKER_RUNTIME  = "dotnet-isolated"
     DOTNET_VERSION            = "8.0"
