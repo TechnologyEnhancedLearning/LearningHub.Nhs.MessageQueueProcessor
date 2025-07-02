@@ -31,7 +31,7 @@ resource "azurerm_application_insights" "MessageQueueProcessorAppInsights" {
 }
 
 resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
-  name                       = "MessageQueueProcessorApp"
+  name                       = var.FunctionAppName
   resource_group_name        = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
   location                   = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
   app_service_plan_id        = azurerm_app_service_plan.MessageQueueProcessorAppServicePlan.id

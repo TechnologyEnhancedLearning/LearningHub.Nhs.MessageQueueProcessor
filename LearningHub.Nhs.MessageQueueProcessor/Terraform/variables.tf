@@ -37,3 +37,7 @@ variable "Environment" {
 variable "StorageAccountName" {
     type = string
 }
+
+variable "FunctionAppName" {
+    type = string
+}
