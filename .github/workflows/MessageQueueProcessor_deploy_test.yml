@@ -46,7 +46,8 @@ jobs:
             -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" \
             -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" \
             -var="SQLVcores=${{ vars.SQL_VCORES }}" \
-            -var="Environment=Test"
+            -var="Environment=Test" \
+            -var="StorageAccountName=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}"
 
   build_and_deploy:
     needs: terraform

@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "MessageQueueProcessorResourceGroup" {
 }
 
 resource "azurerm_storage_account" "MessageQueueProcessorStorageAccount" {
-  name                       = "messagequeueprocessorsa"
+  name                       = var.StorageAccountName
   resource_group_name        = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
   location                   = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
   account_tier               = "Standard"

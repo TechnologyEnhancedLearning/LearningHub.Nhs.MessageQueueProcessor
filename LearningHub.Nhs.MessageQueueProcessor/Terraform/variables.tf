@@ -33,3 +33,7 @@ variable "SQLVcores" {
 variable "Environment" {
     type = string
 }
+
+variable "StorageAccountName" {
+    type = string
+}
