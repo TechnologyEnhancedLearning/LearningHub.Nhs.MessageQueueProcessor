@@ -88,6 +88,11 @@ jobs:
       - name: Publish Project
         run: dotnet publish --output ./publish
 
+      - name: Zip published output
+        run: |
+          cd publish
+          zip -r ../functionapp.zip .
+
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
@@ -99,5 +104,5 @@ jobs:
         uses: Azure/Functions-action@v1
         with:
           app-name: 'MessageQueueProcessorApp'
-          package: './publish'
+          package: './functionapp.zip'
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
