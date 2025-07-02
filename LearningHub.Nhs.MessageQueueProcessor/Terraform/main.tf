@@ -48,7 +48,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
     AzureWebJobsStorage       = azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string
     FUNCTIONS_WORKER_RUNTIME  = "dotnet-isolated"
     DOTNET_VERSION            = "8.0"
-    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.MessageQueueProcessorAppInsights.instrumentation_key
+    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.MessageQueueProcessorAppInsights.instrumentation_key
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.MessageQueueProcessorAppInsights.connection_string
   }
 }
