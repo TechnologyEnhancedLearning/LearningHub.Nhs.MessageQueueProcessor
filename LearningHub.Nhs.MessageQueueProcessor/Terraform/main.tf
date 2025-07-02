@@ -23,6 +23,13 @@ resource "azurerm_app_service_plan" "MessageQueueProcessorAppServicePlan" {
   }
 }
 
+resource "azurerm_application_insights" "MessageQueueProcessorAppInsights" {
+  name                       = "MessageProcessorQueueAppInsights"
+  resource_group_name        = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  location                   = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
+  application_type           = "web"
+}
+
 resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   name                       = "MessageQueueProcessorApp"
   resource_group_name        = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
@@ -41,6 +48,8 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
     AzureWebJobsStorage       = azurerm_storage_account.MessageQueueProcessorStorageAccount.primary_connection_string
     FUNCTIONS_WORKER_RUNTIME  = "dotnet-isolated"
     DOTNET_VERSION            = "8.0"
+    APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.MessageQueueProcessorAppInsights.instrumentation_key
+    APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.MessageQueueProcessorAppInsights.connection_string
   }
 }
 
