@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   terraform:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: dev
     name: 'Terraform MessageQueueProcessor'
     env:
@@ -37,20 +37,20 @@ jobs:
         id: apply
         run: |
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
-          terraform apply -auto-approve `
-            -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" `
-            -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" `
-            -var="SqlmiName=${{ vars.SQLMI_NAME }}" `
-            -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" `
-            -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" `
-            -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" `
-            -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" `
-            -var="SQLVcores=${{ vars.SQL_VCORES }}" `
+          terraform apply -auto-approve \
+            -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
+            -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" \
+            -var="SqlmiName=${{ vars.SQLMI_NAME }}" \
+            -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" \
+            -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" \
+            -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" \
+            -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" \
+            -var="SQLVcores=${{ vars.SQL_VCORES }}" \
             -var="Environment=Development"
 
   build_and_deploy:
     needs: terraform
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: dev
     name: 'Build and deploy the MessageQueueProcessor'
     env:
