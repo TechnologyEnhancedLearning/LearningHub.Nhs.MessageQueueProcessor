@@ -34,6 +34,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
   site_config {
     use_32_bit_worker_process = false
     ftps_state                = "Disabled"
+    linux_fx_version          = "DOTNET-ISOLATED|8.0"
   }
   app_settings = {
     WEBSITE_RUN_FROM_PACKAGE  = "1"
