@@ -1,0 +1,109 @@
+name: Deploy MessageQueueProcessor to Production
+on:
+  push:
+    branches:
+      - main
+  
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    environment: prod
+    name: 'Terraform MessageQueueProcessor'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false  # Skip wrapper script installation
+
+      - name: 'Terraform init'
+        id: init
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          terraform init "-backend-config=backend-prod.tfvars"
+
+      - name: 'Terraform apply'
+        id: apply
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          terraform apply -auto-approve \
+            -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
+            -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" \
+            -var="SqlmiName=${{ vars.SQLMI_NAME }}" \
+            -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" \
+            -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" \
+            -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" \
+            -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" \
+            -var="SQLVcores=${{ vars.SQL_VCORES }}" \
+            -var="Environment=Production" \
+            -var="StorageAccountName=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" \
+            -var="FunctionAppName=${{ vars.AZURE_FUNCTION_APP_NAME }}"
+
+  build_and_deploy:
+    needs: terraform
+    runs-on: ubuntu-latest
+    environment: prod
+    name: 'Build and deploy the MessageQueueProcessor'
+    env:
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Add Azure artifact
+        run: dotnet nuget add source 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json' --name 'LearningHubFeed'  --username 'colin.beeby' --password ${{ secrets.AZURE_DEVOPS_PAT }} --store-password-in-clear-text
+
+      - name: Restore dependencies
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor
+          dotnet restore
+
+      - name: Replace values in appsettings.json
+        run : |
+          cd LearningHub.Nhs.MessageQueueProcessor
+          sed -i -e 's|INSTRUMENTATION_KEY|${{ secrets.APPLICATION_INSIGHTS_INSTRUMENTATION_KEY }}|g' appsettings.json
+          sed -i -e 's|BASE_URL|${{ vars.SETTINGS_BASE_URL }}|g' appsettings.json
+          sed -i -e 's|API_KEY|${{ secrets.SETTINGS_API_KEY }}|g' appsettings.json
+
+      - name: Build project
+        run: dotnet build
+
+      - name: Publish Project
+        run: dotnet publish --output ./publish
+
+      - name: Zip published output
+        run: |
+          cd publish
+          zip -r ../functionapp.zip .
+
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Function App
+        uses: Azure/Functions-action@v1
+        with:
+          app-name: ${{ vars.AZURE_FUNCTION_APP_NAME }}
+          package: './functionapp.zip'
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
