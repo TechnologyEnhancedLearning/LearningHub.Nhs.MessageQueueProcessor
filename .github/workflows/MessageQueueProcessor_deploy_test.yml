@@ -83,7 +83,7 @@ jobs:
           sed -i -e 's|INSTRUMENTATION_KEY|${{ secrets.APPLICATION_INSIGHTS_INSTRUMENTATION_KEY }}|g' appsettings.json
           sed -i -e 's|BASE_URL|${{ vars.SETTINGS_BASE_URL }}|g' appsettings.json
           sed -i -e 's|API_KEY|${{ secrets.SETTINGS_API_KEY }}|g' appsettings.json
-          sed -i -e "s|DB_PASS|${SQL_ADMINISTRATOR_LOGIN_PASSWORD }|g" appsettings.json
+          sed -i -e "s|DB_PASS|${SQL_ADMINISTRATOR_LOGIN_PASSWORD}|g" appsettings.json
 
       - name: Build project
         run: dotnet build
