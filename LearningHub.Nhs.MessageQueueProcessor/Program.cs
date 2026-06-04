@@ -12,8 +12,10 @@ using Microsoft.Extensions.Hosting;
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-builder.Configuration.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 builder.Services.AddOptions();
 builder.Services
