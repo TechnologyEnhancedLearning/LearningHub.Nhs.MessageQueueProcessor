@@ -1,4 +1,4 @@
-#pragma warning disable SA1200 // Using directives should be placed correctly
+#pragma warning disable SA1200 // Using directives should be  placed correctly
 using LearningHub.Nhs.MessageQueueProcessor.Configuration;
 using LearningHub.Nhs.MessageQueueProcessor.Helpers;
 using LearningHub.Nhs.MessageQueueProcessor.Services;
