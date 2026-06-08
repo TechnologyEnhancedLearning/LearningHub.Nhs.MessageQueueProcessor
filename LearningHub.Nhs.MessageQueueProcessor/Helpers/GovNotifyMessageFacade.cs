@@ -8,7 +8,7 @@
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The GovNotifyMessageFacade.
+    /// The  GovNotifyMessageFacade.
     /// </summary>
     public class GovNotifyMessageFacade : IGovNotifyMessageFacade
     {
