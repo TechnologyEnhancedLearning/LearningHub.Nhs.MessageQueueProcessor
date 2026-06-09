@@ -194,6 +194,20 @@ resource "azurerm_subnet" "subnet" {
   }
 }
 
+resource "azurerm_subnet" "app_service_integration_subnet" {
+  name = "AppServiceIntegrationSubnet"
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes = ["10.0.2.0/26"]
+  delegation {
+    name = "appServiceDelegation"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
+}
+
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg_association" {
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.nsg.id
