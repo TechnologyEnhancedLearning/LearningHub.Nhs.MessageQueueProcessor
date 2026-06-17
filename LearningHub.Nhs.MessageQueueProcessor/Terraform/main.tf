@@ -208,6 +208,13 @@ resource "azurerm_subnet" "app_service_integration_subnet" {
   }
 }
 
+resource "azurerm_subnet" "devops_agent_subnet" {
+  name = "DevOpsAgentSubnet"
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes = ["10.0.3.0/27"]
+}
+
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg_association" {
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.nsg.id
