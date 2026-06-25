@@ -225,24 +225,6 @@ resource "azurerm_subnet_route_table_association" "subnet_route_table_associatio
   route_table_id = azurerm_route_table.route_table.id
 }
 
-data "azurerm_virtual_network" "core_net" {
-  name                = "UKS-ELFH-CORENET-VNET"
-  resource_group_name = "UKS-ELFH-CORENET-RG"
-  subscription_id     = "68aa842d-b628-4755-9dc6-7f20d8c0cd10"
-}
-
-# Create peering from your ManagedInstanceVnet to CoreNet
-resource "azurerm_virtual_network_peering" "sqlmi_to_corenet" {
-  name                      = "SQLMI-to-CoreNet"
-  resource_group_name       = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
-  virtual_network_name      = azurerm_virtual_network.vnet.name
-  remote_virtual_network_id = data.azurerm_virtual_network.core_net.id
-
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-  allow_gateway_transit        = false
-  use_remote_gateways          = true 
-}
 
 
 resource "azurerm_mssql_managed_instance" "sqlmi" {
