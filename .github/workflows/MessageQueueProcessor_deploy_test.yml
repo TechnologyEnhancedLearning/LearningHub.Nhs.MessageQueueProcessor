@@ -36,7 +36,21 @@ jobs:
       - name: 'Terraform import existing subnet'
         run: |
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
-          terraform import azurerm_subnet.subnet "/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2"
+          terraform import \
+            -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
+            -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" \
+            -var="SqlmiName=${{ vars.SQLMI_NAME }}" \
+            -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" \
+            -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" \
+            -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" \
+            -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" \
+            -var="SQLVcores=${{ vars.SQL_VCORES }}" \
+            -var="Environment=Test" \
+            -var="StorageAccountName=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" \
+            -var="FunctionAppName=${{ vars.AZURE_FUNCTION_APP_NAME }}" \
+            azurerm_subnet.subnet \
+            "/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2"
+
 
       - name: 'Terraform apply'
         id: apply
