@@ -33,17 +33,32 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform init "-backend-config=backend-test.tfvars"
 
+      - name: Create temporary tfvars
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          cat <<EOF > temp.auto.tfvars
+          ResourceGroupName="${{ vars.AZURE_RESOURCE_GROUP_NAME }}"
+          ResourceGroupLocation="${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}"
+          SqlmiName="${{ vars.SQLMI_NAME }}"
+          SQLAdministratorLogin="${{ vars.SQL_ADMINISTRATOR_LOGIN }}"
+          SQLAdministratorLoginPassword="${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}"
+          SQLSkuName="${{ vars.SQL_SKU_NAME }}"
+          SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}
+          SQLVcores=${{ vars.SQL_VCORES }}
+          Environment="Test"
+          StorageAccountName="${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}"
+          FunctionAppName="${{ vars.AZURE_FUNCTION_APP_NAME }}"
+          EOF
+
       - name: 'Terraform import existing nsg association'
         run: |
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
-          terraform import azurerm_subnet_network_security_group_association.subnet_nsg_association '/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/networkSecurityGroups/ManagedInstanceNSG' -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" -var="SqlmiName=${{ vars.SQLMI_NAME }}" -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" -var="SQLVcores=${{ vars.SQL_VCORES }}" -var="Environment=Test" -var="StorageAccountName=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" -var="FunctionAppName=${{ vars.AZURE_FUNCTION_APP_NAME }}"
-
-            
+          terraform import azurerm_subnet_network_security_group_association.subnet_nsg_association '/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/networkSecurityGroups/ManagedInstanceNSG'
 
       - name: 'Terraform import existing route table association'
         run: |
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
-          terraform import azurerm_subnet_route_table_association.subnet_route_table_association '/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/routeTables/ManagedInstanceRouteTable' -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" -var="SqlmiName=${{ vars.SQLMI_NAME }}" -var="SQLAdministratorLogin=${{ vars.SQL_ADMINISTRATOR_LOGIN }}" -var="SQLAdministratorLoginPassword=${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}" -var="SQLSkuName=${{ vars.SQL_SKU_NAME }}" -var="SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}" -var="SQLVcores=${{ vars.SQL_VCORES }}" -var="Environment=Test" -var="StorageAccountName=${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}" -var="FunctionAppName=${{ vars.AZURE_FUNCTION_APP_NAME }}"
+          terraform import azurerm_subnet_route_table_association.subnet_route_table_association '/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/routeTables/ManagedInstanceRouteTable'
 
           
 
