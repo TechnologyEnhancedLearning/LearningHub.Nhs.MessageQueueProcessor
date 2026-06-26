@@ -36,7 +36,7 @@ jobs:
       - name: 'Terraform import existing subnet'
         run: |
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
-          terraform import azurerm_subnet.my_subnet "/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2"
+          terraform import azurerm_subnet.subnet "/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2"
 
       - name: 'Terraform apply'
         id: apply
