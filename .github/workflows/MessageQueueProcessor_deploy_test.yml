@@ -38,7 +38,7 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform import \
             azurerm_subnet_network_security_group_association.subnet_nsg_association \
-            "/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/networkSecurityGroups/ManagedInstanceNSG" \
+            '/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/networkSecurityGroups/ManagedInstanceNSG' \
             -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
             -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" \
             -var="SqlmiName=${{ vars.SQLMI_NAME }}" \
@@ -57,7 +57,7 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform import \
             azurerm_subnet_route_table_association.subnet_route_table_association \
-            "/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/routeTables/ManagedInstanceRouteTable" \
+            '/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/66516f71-f3d4-4911-b900-c6e4690a5b15/resourceGroups/LearningHub-MessageQueueProcessor-Test/providers/Microsoft.Network/routeTables/ManagedInstanceRouteTable' \
             -var="ResourceGroupName=${{ vars.AZURE_RESOURCE_GROUP_NAME }}" \
             -var="ResourceGroupLocation=${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}" \
             -var="SqlmiName=${{ vars.SQLMI_NAME }}" \
