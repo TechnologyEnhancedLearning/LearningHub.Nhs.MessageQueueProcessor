@@ -16,7 +16,7 @@
         private HttpClient apiClient;
 
         /// <summary>
-        /// Initializes a new instance of the  <see cref="ClientService"/> class.
+        /// Initializes a new instance of the   <see cref="ClientService"/> class.
         /// </summary>
         /// <param name="settings">config settings.</param>
         public ClientService(IOptions<Settings> settings)
@@ -36,7 +36,7 @@
         }
 
         /// <summary>
-        /// CreateApiClient.
+        /// CreateApiClient .
         /// </summary>
         private HttpClient CreateApiClient()
         {

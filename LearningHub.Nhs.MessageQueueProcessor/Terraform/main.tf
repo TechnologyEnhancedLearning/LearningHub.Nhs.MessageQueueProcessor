@@ -55,7 +55,7 @@ resource "azurerm_function_app" "MessageQueueProcessorFunctionApp" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "ManagedInstanceVnet"
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["10.40.0.0/24","10.41.0.0/24"]
   location            = azurerm_resource_group.MessageQueueProcessorResourceGroup.location
   resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
 }
@@ -181,10 +181,10 @@ resource "azurerm_route_table" "route_table" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name = "ManagedInstanceSubnet"
+  name = "ManagedInstanceSubnet2"
   resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes = ["10.0.1.0/24"]
+  address_prefixes = ["10.40.0.0/24"]
   delegation {
     name = "sqlMI"
     service_delegation {
@@ -194,6 +194,27 @@ resource "azurerm_subnet" "subnet" {
   }
 }
 
+resource "azurerm_subnet" "app_service_integration_subnet" {
+  name = "AppServiceIntegrationSubnet2"
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes = ["10.41.0.0/26"]
+  delegation {
+    name = "appServiceDelegation"
+    service_delegation {
+      name = "Microsoft.Web/serverFarms"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
+}
+
+resource "azurerm_subnet" "devops_agent_subnet" {
+  name = "DevOpsAgentSubnet"
+  resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes = ["10.41.0.64/27"]
+}
+/*
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg_association" {
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.nsg.id
@@ -203,6 +224,8 @@ resource "azurerm_subnet_route_table_association" "subnet_route_table_associatio
   subnet_id = azurerm_subnet.subnet.id
   route_table_id = azurerm_route_table.route_table.id
 }
+*/
+
 
 resource "azurerm_mssql_managed_instance" "sqlmi" {
   name = var.SqlmiName

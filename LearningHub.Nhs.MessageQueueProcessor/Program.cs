@@ -1,4 +1,4 @@
-#pragma warning disable SA1200 // Using directives should be placed correctly
+#pragma warning disable SA1200 // Using directives should be  placed correctly
 using LearningHub.Nhs.MessageQueueProcessor.Configuration;
 using LearningHub.Nhs.MessageQueueProcessor.Helpers;
 using LearningHub.Nhs.MessageQueueProcessor.Services;
@@ -12,8 +12,10 @@ using Microsoft.Extensions.Hosting;
 var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-builder.Configuration.AddJsonFile("local.settings.json", optional: true, reloadOnChange: true);
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 builder.Services.AddOptions();
 builder.Services
