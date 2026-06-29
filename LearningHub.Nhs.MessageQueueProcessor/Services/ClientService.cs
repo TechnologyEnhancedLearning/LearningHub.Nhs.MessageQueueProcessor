@@ -36,7 +36,7 @@
         }
 
         /// <summary>
-        /// CreateApiClient.
+        /// CreateApiClient .
         /// </summary>
         private HttpClient CreateApiClient()
         {
