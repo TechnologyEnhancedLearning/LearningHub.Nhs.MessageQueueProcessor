@@ -34,6 +34,10 @@
         /// <returns>The response.</returns>
         public async Task ProcessQueueAsync()
         {
+            var ukTimeZone = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+
+            var ukTime = TimeZoneInfo.ConvertTime(DateTimeOffset.UtcNow, ukTimeZone);
+
             var pendingEmails = await this.govNotifyMessageFacade.GetAsync<List<PendingMessageRequests>>("GovNotifyMessage/PendingMessageRequests");
 
             foreach (var email in pendingEmails)
@@ -62,6 +66,7 @@
                     if (result != null)
                     {
                         this.logger.LogInformation("Updating emails status.");
+                        result.MessageSentTime = ukTime;
                         if (result.IsSuccess)
                         {
                             await this.govNotifyMessageFacade.PostAsync<GovNotifyResponse, object>("GovNotifyMessage/MessageSuccessUpdate", result);
