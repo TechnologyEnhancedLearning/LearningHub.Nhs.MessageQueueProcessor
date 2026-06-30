@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// IGovNotifyMessageFacade.
+    /// IGovNotifyMessageFacade .
     /// </summary>
     public interface IGovNotifyMessageFacade
     {
