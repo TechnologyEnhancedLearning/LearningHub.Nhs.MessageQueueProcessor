@@ -234,7 +234,7 @@ resource "azurerm_mssql_managed_instance" "sqlmi" {
   license_type = "BasePrice"
   administrator_login = var.SQLAdministratorLogin
   administrator_login_password = var.SQLAdministratorLoginPassword
-  subnet_id = azurerm_subnet.subnet.id
+  subnet_id = azurerm_subnet.subnet2.id
   sku_name = var.SQLSkuName
   storage_size_in_gb = var.SQLStorageSize
   vcores = var.SQLVcores
