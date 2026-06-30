@@ -59,7 +59,7 @@ jobs:
         run: |
            cd LearningHub.Nhs.MessageQueueProcessor/Terraform
            terraform import \
-           azurerm_subnet.subnet \
+           azurerm_subnet.subnet2 \
            "/subscriptions/57c55d5f-78c1-4373-a021-ff8357548f51/resourceGroups/LearningHub-MessageQueueProcessor-Prod/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2"
 
       - name: 'Terraform import existing nsg association'
