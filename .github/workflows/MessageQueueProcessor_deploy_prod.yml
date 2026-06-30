@@ -38,6 +38,40 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform state list
 
+      - name: Create temporary tfvars
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          cat <<EOF > temp.auto.tfvars
+          ResourceGroupName="${{ vars.AZURE_RESOURCE_GROUP_NAME }}"
+          ResourceGroupLocation="${{ vars.AZURE_RESOURCE_GROUP_LOCATION }}"
+          SqlmiName="${{ vars.SQLMI_NAME }}"
+          SQLAdministratorLogin="${{ vars.SQL_ADMINISTRATOR_LOGIN }}"
+          SQLAdministratorLoginPassword="${{ secrets.SQL_ADMINISTRATOR_LOGIN_PASSWORD }}"
+          SQLSkuName="${{ vars.SQL_SKU_NAME }}"
+          SQLStorageSize=${{ vars.SQL_STORAGE_SIZE }}
+          SQLVcores=${{ vars.SQL_VCORES }}
+          Environment="prod"
+          StorageAccountName="${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}"
+          FunctionAppName="${{ vars.AZURE_FUNCTION_APP_NAME }}"
+          EOF
+
+      - name: 'Terraform import existing subnet'
+        run: |
+           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+           terraform import \
+           azurerm_subnet.subnet \
+           "/subscriptions/57c55d5f-78c1-4373-a021-ff8357548f51/resourceGroups/LearningHub-MessageQueueProcessor-Prod/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2"
+
+      - name: 'Terraform import existing nsg association'
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          terraform import azurerm_subnet_network_security_group_association.subnet_nsg_association '/subscriptions/57c55d5f-78c1-4373-a021-ff8357548f51/resourceGroups/LearningHub-MessageQueueProcessor-Prod/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/57c55d5f-78c1-4373-a021-ff8357548f51/resourceGroups/LearningHub-MessageQueueProcessor-Prod/providers/Microsoft.Network/networkSecurityGroups/ManagedInstanceNSG'
+
+      - name: 'Terraform import existing route table association'
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          terraform import azurerm_subnet_route_table_association.subnet_route_table_association '/subscriptions/57c55d5f-78c1-4373-a021-ff8357548f51/resourceGroups/LearningHub-MessageQueueProcessor-Prod/providers/Microsoft.Network/virtualNetworks/ManagedInstanceVnet/subnets/ManagedInstanceSubnet2|/subscriptions/57c55d5f-78c1-4373-a021-ff8357548f51/resourceGroups/LearningHub-MessageQueueProcessor-Prod/providers/Microsoft.Network/routeTables/ManagedInstanceRouteTable'
+
 
       - name: 'Terraform apply'
         id: apply
