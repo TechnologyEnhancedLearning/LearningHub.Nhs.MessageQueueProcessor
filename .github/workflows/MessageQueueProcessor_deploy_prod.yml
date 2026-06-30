@@ -33,6 +33,11 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform init "-backend-config=backend-prod.tfvars"
 
+      - name: List Terraform state
+        run: |
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          terraform state list
+
       - name: 'Terraform apply'
         id: apply
         run: |
