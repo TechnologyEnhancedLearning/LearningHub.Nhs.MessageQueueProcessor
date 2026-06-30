@@ -38,6 +38,14 @@ jobs:
           cd LearningHub.Nhs.MessageQueueProcessor/Terraform
           terraform state list
 
+      - name: Remove Security Group Assoiation
+        run: | 
+          cd LearningHub.Nhs.MessageQueueProcessor/Terraform
+          terraform state rm azurerm_subnet_network_security_group_association.subnet_nsg_association
+          terraform state rm azurerm_subnet_route_table_association.subnet_route_table_association
+
+       
+
       - name: 'Terraform apply'
         id: apply
         run: |
