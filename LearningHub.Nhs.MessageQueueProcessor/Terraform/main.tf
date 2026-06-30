@@ -180,7 +180,7 @@ resource "azurerm_route_table" "route_table" {
   resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
 }
 
-resource "azurerm_subnet" "subnet" {
+resource "azurerm_subnet" "subnet2" {
   name = "ManagedInstanceSubnet2"
   resource_group_name = azurerm_resource_group.MessageQueueProcessorResourceGroup.name
   virtual_network_name = azurerm_virtual_network.vnet.name
