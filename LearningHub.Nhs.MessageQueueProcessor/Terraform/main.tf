@@ -214,17 +214,17 @@ resource "azurerm_subnet" "devops_agent_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes = ["10.41.0.64/27"]
 }
-/*
+
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg_association" {
-  subnet_id                 = azurerm_subnet.subnet.id
+  subnet_id                 = azurerm_subnet.subnet2.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
 resource "azurerm_subnet_route_table_association" "subnet_route_table_association" {
-  subnet_id = azurerm_subnet.subnet.id
+  subnet_id = azurerm_subnet.subnet2.id
   route_table_id = azurerm_route_table.route_table.id
 }
-*/
+
 
 
 resource "azurerm_mssql_managed_instance" "sqlmi" {
@@ -245,7 +245,7 @@ resource "azurerm_mssql_managed_instance" "sqlmi" {
     type = "SystemAssigned"
   }
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
   timeouts {
     create = "180m"
