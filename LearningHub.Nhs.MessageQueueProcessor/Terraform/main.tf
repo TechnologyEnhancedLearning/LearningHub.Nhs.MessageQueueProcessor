@@ -245,7 +245,7 @@ resource "azurerm_mssql_managed_instance" "sqlmi" {
     type = "SystemAssigned"
   }
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
   timeouts {
     create = "180m"
